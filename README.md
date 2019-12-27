@@ -1,6 +1,6 @@
 # [Portinaru](https://portinari.io/) Gerador de CRUD Simples Portinari
 
-Esse extensão cria um CRUD básico com toda es estrutura básica utilizando o Portinari
+Esse extensão cria um CRUD básico com toda a estrutura necessário utilizando o Portinari
 
 Estrutura das pastas:
 
