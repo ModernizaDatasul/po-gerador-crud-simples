@@ -37,13 +37,13 @@ export class {pascalCase} implements I{pascalCase} {
     }
 
     static fromJson(json: Array<any> = []) {
-        
-        let items: Array<I{pascalCase}> = [];
 
-        for (let values of json) {
+        const items: Array<I{pascalCase}> = [];
+
+        for (const values of json) {
             items.push(new {pascalCase}(values));
         }
-        
+
         return items;
     }
 

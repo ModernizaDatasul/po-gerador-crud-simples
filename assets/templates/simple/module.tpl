@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ThfModule } from '@totvs/thf-ui';
-import { ThfI18nPipe } from '@totvs/thf-ui/services/thf-i18n';
+import { PoModule, PoI18nPipe } from '@portinari/portinari-ui';
 
 import { {pascalCase}Service } from '../shared/services/{paramCase}.service';
 import { {pascalCase}EditComponent } from './edit/{paramCase}.edit.component';
 import { {pascalCase}ListComponent } from './{paramCase}.list.component';
 import { {pascalCase}RoutingModule } from './{paramCase}-routing.module';
 
+import { LoadingInterceptorModule } from '../loading-interceptor.module';
+
 @NgModule({
     imports: [
         CommonModule,
-        ThfModule,
+        LoadingInterceptorModule,
+        PoModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         {pascalCase}RoutingModule
     ],
@@ -26,8 +29,8 @@ import { {pascalCase}RoutingModule } from './{paramCase}-routing.module';
     exports: [
         {pascalCase}ListComponent
     ],
-    providers: [        
-        ThfI18nPipe,
+    providers: [
+        PoI18nPipe,
         {pascalCase}Service
     ],
 })

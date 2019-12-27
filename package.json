@@ -4,10 +4,10 @@
     "displayName": "PO Gerardor de CRUD Simples",
     "description": "Gerador de CRUD Simples utilizando Angular + Portinari",
     "icon": "assets/images/po-icon.png",
-    "homepage": "https://github.com/totvs/thf-angular-crud-templates",
+    "homepage": "https://github.com/AlexandreWeber/po-gerador-crud-simples",
     "repository": {
         "type": "git",
-        "url": "https://github.com/totvs/thf-angular-crud-templates.git"
+        "url": "https://github.com/AlexandreWeber/po-gerador-crud-simples.git"
     },
     "keywords": [
         "ANGULAR",

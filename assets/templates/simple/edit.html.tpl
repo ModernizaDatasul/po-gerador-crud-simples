@@ -1,57 +1,55 @@
-<thf-page-default
-    [t-actions]="isPageEdit ? editActions : newActions"
-    [t-breadcrumb]="isPageEdit ? editBreadcrumb : newBreadcrumb"
-    [t-title]="isPageEdit ? literals?.edit{pascalCase} : literals?.addNew{pascalCase}"
->
+<po-page-default
+    [p-actions]="isPageEdit ? editActions : newActions"
+    [p-breadcrumb]="isPageEdit ? editBreadcrumb : newBreadcrumb"
+    [p-title]="isPageEdit ? literals?.edit{pascalCase} : literals?.addNew{pascalCase}">
 
-    <div class="thf-row">
-        <div class="thf-lg-6 thf-offset-lg-3 thf-xl-6 thf-offset-xl-3">
-            <form #form{pascalCase}="ngForm">
-
-                <div class="thf-row">
-
-                    <thf-input
-                        class="thf-md-12"
+    <div class="po-row">
+        <div class="po-lg-6 po-offset-lg-3 po-xl-6 po-offset-xl-3">
+            <form [formGroup]="form">
+                <div>
+                    <po-input
+                        formControlName="name"
+                        [p-error-pattern]="errorPattern"
+                        p-required="true"
+                        [p-placeholder]="literals?.name"
+                        p-focus="true"
+                        [p-label]="literals?.name"
+                        p-maxlength="50"
+                        (p-change-model)="change()"
                         name="name"
-                        [(ngModel)]="{camelCase}.name"
-                        t-clean
-                        [t-label]="literals?.name"
-                        t-minlength="3"
-                        [t-placeholder]="literals?.name"
-                        t-required="true"
-                        #uname="ngModel"
-                    >
-                    </thf-input>
-
+                        p-clean>
+                    </po-input>
                 </div>
-
             </form>
         </div>
     </div>
-</thf-page-default>
+</po-page-default>
 
-<thf-modal
+<po-modal
     #modalDelete
-    t-close
-    t-size="sm"
-    [t-title]="literals?.modalDeleteTitle"
-    [t-primary-action]="confirmDeleteAction"
-    [t-secondary-action]="returnAction"
->
-    <div class="thf-font-text-large thf-text-left">
-        {{ literals?.modalDeleteMessage }}
-    </div>
-</thf-modal>
+    p-click-out="true"
+    p-close
+    p-size="auto"
+    [p-title]="literals?.excludeTitle"
+    [p-primary-action]="confirmDeleteAction"
+    [p-secondary-action]="cancelModalAction">
 
-<thf-modal
-    #modalCancel
-    t-close
-    t-size="sm"
-    [t-title]="literals?.modalCancelEditTitle"
-    [t-primary-action]="confirmReturnToListAction"
-    [t-secondary-action]="returnAction"
->
-    <div class="thf-font-text-large thf-text-left">
-        {{ literals?.modalCancelEditMessage }}
+    <div class="po-font-text-large po-text-left">
+        {{ literals?.excludeText | poI18n: [{camelCase}.name] }}
     </div>
-</thf-modal>
+    
+</po-modal>
+
+<po-modal
+    #modalCancel
+    p-close
+    p-size="auto"
+    [p-title]="literals?.cancelTitle"
+    [p-primary-action]="backModalAction"
+    [p-secondary-action]="cancelModalAction">
+
+    <div class="po-font-text-large po-text-left">
+        {{ literals?.cancelText }}
+    </div>
+
+</po-modal>

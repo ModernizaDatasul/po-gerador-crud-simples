@@ -1,13 +1,20 @@
 export const {camelCase}{language} = {
-    
+
     {camelCase}: '{camelCase}',
 
-    code: 'code',
-    name: 'name',
-    
     addNew{pascalCase}: 'addNew{pascalCase}',
     edit{pascalCase}: 'edit{pascalCase}',
 
-    created{pascalCase}Message: 'created{pascalCase}Message',
-    excluded{pascalCase}Message: 'excluded{pascalCase}Message {0}'
+    excludeTitle: 'Exclude',
+    excludeOne: 'Exclude record',
+    excludeMore: 'Exclude records',
+    excludeText: 'Exclude text',
+
+    cancelTitle: 'Cancel',
+    cancelText: 'Cancel Text',
+
+    createdMessage: 'Record created',
+    updatedMessage: 'Record changed',
+    excludedMessage: 'Record deleted',
+
 };

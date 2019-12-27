@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ThfDisclaimer } from '@totvs/thf-ui/components/thf-disclaimer/thf-disclaimer.interface';
+import { PoDisclaimer } from '@portinari/portinari-ui';
 
 import { TotvsResponse } from '../interfaces/totvs-response.interface';
 
@@ -12,13 +12,14 @@ import { I{pascalCase} } from '../model/{paramCase}.model';
 @Injectable()
 export class {pascalCase}Service {
 
-    // FIXME: Change to the backend service URL
-    private apiUrl = '/{camelCase}';
+    // FIXME: Ajuste o módulo
+	private apiUrl = '/dts/datasul-rest/resources/prg/modulo/v1/{camelCase}';
+
 
     constructor(private http: HttpClient) { }
 
-    query(filters: ThfDisclaimer[], page = 1, pageSize = 20): Observable<TotvsResponse<I{pascalCase}>> {
-        
+    query(filters: PoDisclaimer[], page = 1, pageSize = 20): Observable<TotvsResponse<I{pascalCase}>> {
+
         let url: string = `${this.apiUrl}?pageSize=${pageSize}&page=${page}`;
 
         if (filters && filters.length > 0) {

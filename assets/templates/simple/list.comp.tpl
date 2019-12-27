@@ -1,17 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ThfBreadcrumb } from '@totvs/thf-ui/components/thf-breadcrumb';
-import { ThfDisclaimerGroup } from '@totvs/thf-ui/components/thf-disclaimer-group';
-import { ThfDisclaimer } from '@totvs/thf-ui/components/thf-disclaimer/thf-disclaimer.interface';
-import { ThfModalAction } from '@totvs/thf-ui/components/thf-modal';
-import { ThfModalComponent } from '@totvs/thf-ui/components/thf-modal/thf-modal.component';
-import { ThfPageAction, ThfPageFilter } from '@totvs/thf-ui/components/thf-page';
-import { ThfTableColumn } from '@totvs/thf-ui/components/thf-table';
-import { ThfI18nService, ThfI18nPipe } from '@totvs/thf-ui/services/thf-i18n';
-import { ThfNotificationService } from '@totvs/thf-ui/services/thf-notification/thf-notification.service';
+import {
+    PoBreadcrumb, PoDisclaimerGroup, PoDisclaimer, PoModalAction,
+    PoModalComponent, PoPageAction, PoPageFilter, PoTableColumn,
+    PoI18nService, PoI18nPipe, PoNotificationService
+} from '@portinari/portinari-ui';
 
-import { Observable, Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { TotvsResponse } from '../shared/interfaces/totvs-response.interface';
 
@@ -25,49 +21,50 @@ import { {pascalCase}Service } from '../shared/services/{paramCase}.service';
 })
 export class {pascalCase}ListComponent implements OnInit, OnDestroy {
 
-    @ViewChild('modalDelete') modalDelete: ThfModalComponent;
+    @ViewChild('modalDelete', { static: false }) modalDelete: PoModalComponent;
 
     private itemsSubscription$: Subscription;
+    private disclaimers: Array<PoDisclaimer> = [];
 
-    private disclaimers: Array<ThfDisclaimer> = [];
+    cancelDeleteAction: PoModalAction;
+    confirmDeleteAction: PoModalAction;
 
-    cancelDeleteAction: ThfModalAction;
-    confirmDeleteAction: ThfModalAction;
+    pageActions: Array<PoPageAction>;
+    tableActions: Array<PoPageAction>;
 
-    pageActions: Array<ThfPageAction>;
-    tableActions: Array<ThfPageAction>;
+    breadcrumb: PoBreadcrumb;
+    disclaimerGroup: PoDisclaimerGroup;
+    filterSettings: PoPageFilter;
 
-    breadcrumb: ThfBreadcrumb;
-    disclaimerGroup: ThfDisclaimerGroup;
-    filterSettings: ThfPageFilter;
+    items: Array<I{pascalCase}> = new Array<I{pascalCase}>();
+    columns: Array<PoTableColumn>;
 
-    items: Array<ITicketStatus> = new Array<ITicketStatus>();
-    columns: Array<ThfTableColumn>;
-
-    hasNext: boolean = false;
-    pageSize: number = 20;
-    currentPage: number = 0;
-
+    hasNext = false;
+    pageSize = 20;
+    currentPage = 0;
     isLoading = true;
-    quickSearchValue: string = '';
+    quickSearchValue = '';
+    moreSelected = false;
+    selectedLength = 0;
 
     literals: any = {};
 
     constructor(
         private service: {pascalCase}Service,
-        private thfI18nPipe: ThfI18nPipe,
-        private thfI18nService: ThfI18nService,
-        private thfNotification: ThfNotificationService,
+        private poI18nPipe: PoI18nPipe,
+        private poI18nService: PoI18nService,
+        private poNotification: PoNotificationService,
         private router: Router,
-    ) {}
+    ) { }
 
     ngOnInit(): void {
-        Observable.forkJoin(
-            this.thfI18nService.getLiterals(),
-            this.thfI18nService.getLiterals({ context: '{camelCase}' })
+        forkJoin(
+            this.poI18nService.getLiterals(),
+            this.poI18nService.getLiterals({ context: '{camelCase}' })
         ).subscribe(literals => {
             literals.map(item => Object.assign(this.literals, item));
             this.setupComponents();
+            this.search();
         });
     }
 
@@ -105,15 +102,15 @@ export class {pascalCase}ListComponent implements OnInit, OnDestroy {
         if (selected.length > 0) {
             selected.map((item: I{pascalCase}) => {
                 this.service.delete(item.id).subscribe(response => {
-                    this.thfNotification.success(
-                        this.thfI18nPipe.transform(
-                            this.literals['excluded{pascalCase}Message'], [item.name]
+                    this.poNotification.success(
+                        this.poI18nPipe.transform(
+                            this.literals['excludedMessage'], [item.name]
                         )
                     );
                     if (++count === selected.length) {
                         this.search();
                     }
-                }, (err:any) => {
+                }, (err: any) => {
                     if (++count === selected.length) {
                         this.search();
                     }
@@ -141,38 +138,68 @@ export class {pascalCase}ListComponent implements OnInit, OnDestroy {
     private onConfirmDelete(): void {
         this.modalDelete.close();
         this.delete();
+        this.selectedLength = 0;
+        this.moreSelected = false;
+    }
+
+    private cancelDelete() {
+        this.modalDelete.close();
+        this.selectedLength = 0;
+        this.moreSelected = false;
+    }
+
+    private selected() {
+        return !this.items.find(item => item['$selected']);
+    }
+
+    private deleteModalValidate() {
+        const selected = this.items.filter((item: any) => item.$selected);
+        if (selected.length > 1) {
+            this.moreSelected = true;
+            this.selectedLength = selected.length;
+        }
+        this.modalDelete.open();
     }
 
     private setupComponents(): void {
 
-        this.confirmDeleteAction = {
-            action: () => this.onConfirmDelete(), label: this.literals['remove']
+        this.confirmDeleteAction = { 
+            action: () => this.onConfirmDelete(), 
+            label: this.literals['yes'] 
         };
 
-        this.cancelDeleteAction = {
-            action: () => this.modalDelete.close(), label: this.literals['return']
+        this.cancelDeleteAction = { 
+            action: () => this.cancelDelete(), 
+            label: this.literals['no'] 
         };
 
         this.pageActions = [
             {
                 label: this.literals['addNew{pascalCase}'],
-                action: () => this.router.navigate(['{camelCase}/new']), icon: 'thf-icon-plus'
+                action: () => this.router.navigate(['{camelCase}/new']), icon: 'po-icon-plus'
             },
-            { label: this.literals['remove'], action: () => this.modalDelete.open() }
-        ];
-
-        this.tableActions = [
-            { action: this.edit.bind(this), label: this.literals['edit'] },
+            { 
+                label: this.literals['remove'], 
+                action: () => this.deleteModalValidate(), 
+                disabled: () => this.selected()
+            }
         ];
 
         this.columns = [
-            { column: 'id', label: this.literals['code'], type: 'string' },
-            { column: 'name', label: this.literals['name'], type: 'link', action: (value, row) => this.edit(row) }
+            { 
+                property: 'name', 
+                label: this.literals['name'], 
+                type: 'link', 
+                action: (value, row) => this.edit(row) 
+            }
         ];
 
         this.breadcrumb = {
             items: [
-                { label: this.literals['{camelCase}'], link: '/{camelCase}' }
+                { 
+                    label: this.literals['{camelCase}'], 
+                    link: '/{camelCase}' 
+                }
             ]
         };
 

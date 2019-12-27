@@ -1,16 +1,23 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { NgForm } from '@angular/forms';
-
-import { Observable } from 'rxjs';
-
-import { ThfBreadcrumb } from '@totvs/thf-ui/components/thf-breadcrumb';
-import { ThfModalAction } from '@totvs/thf-ui/components/thf-modal';
-import { ThfModalComponent } from '@totvs/thf-ui/components/thf-modal/thf-modal.component';
-import { ThfPageAction } from '@totvs/thf-ui/components/thf-page';
-import { ThfI18nService, ThfI18nPipe } from '@totvs/thf-ui/services/thf-i18n';
-import { ThfNotificationService } from '@totvs/thf-ui/services/thf-notification/thf-notification.service';
+import { forkJoin } from 'rxjs';
+import {
+    NgForm, 
+    FormBuilder, 
+    Validators,
+    FormGroup, 
+    AbstractControl, 
+    ValidationErrors
+} from '@angular/forms';
+import {
+    PoBreadcrumb, 
+    PoModalAction, 
+    PoModalComponent,
+    PoPageAction, 
+    PoI18nService, 
+    PoI18nPipe, 
+    PoNotificationService
+} from '@portinari/portinari-ui';
 
 import { I{pascalCase}, {pascalCase} } from '../../shared/model/{paramCase}.model';
 import { {pascalCase}Service } from '../../shared/services/{paramCase}.service';
@@ -22,52 +29,88 @@ import { {pascalCase}Service } from '../../shared/services/{paramCase}.service';
 })
 export class {pascalCase}EditComponent implements OnInit, OnDestroy {
 
-    @ViewChild('modalDelete') modalDelete: ThfModalComponent;
-    @ViewChild('modalCancel') modalCancel: ThfModalComponent;
-    
-    @ViewChild('form{pascalCase}') form{pascalCase}: NgForm;
+    @ViewChild('modalDelete', { static: false }) modalDelete: PoModalComponent;
+    @ViewChild('modalCancel', { static: false }) modalCancel: PoModalComponent;
 
-    returnAction: ThfModalAction;
-    confirmDeleteAction: ThfModalAction;
-    confirmReturnToListAction: ThfModalAction;
-    
-    newBreadcrumb: ThfBreadcrumb;
-    editBreadcrumb: ThfBreadcrumb;
+    confirmDeleteAction: PoModalAction;
+    cancelModalAction: PoModalAction;
+    backModalAction: PoModalAction;
 
-    newActions: Array<ThfPageAction>;
-    editActions: Array<ThfPageAction>;
+    form: FormGroup;
+    errorPattern: string;
+
+    newBreadcrumb: PoBreadcrumb;
+    editBreadcrumb: PoBreadcrumb;
+    modalActions: Array<PoModalAction>;
+    newActions: Array<PoPageAction>;
+    editActions: Array<PoPageAction>;
 
     isPageEdit: boolean;
     {camelCase}: I{pascalCase} = {pascalCase}.empty();
-    
+
     literals: any = {};
+    validate: any = { minLgth: 3, maxLgth: 50 };
 
     constructor(
         private router: Router,
-        private location: Location,
         private activatedRoute: ActivatedRoute,
-        private thfI18nPipe: ThfI18nPipe,
-        private thfI18nService: ThfI18nService,
-        private thfNotification: ThfNotificationService,
-        private service: {pascalCase}Service
+        private poI18nPipe: PoI18nPipe,
+        private poI18nService: PoI18nService,
+        private poNotification: PoNotificationService,
+        private service: {pascalCase}Service,
+        private fb: FormBuilder
     ) { }
 
     ngOnInit(): void {
-        Observable.forkJoin(
-            this.thfI18nService.getLiterals(),
-            this.thfI18nService.getLiterals({ context: '{camelCase}' })
+        forkJoin(
+            this.poI18nService.getLiterals(),
+            this.poI18nService.getLiterals({ context: '{camelCase}' })
         ).subscribe(literals => {
             literals.map(item => Object.assign(this.literals, item));
+            this.createFormControl();
             this.setupComponents();
             this.get();
         });
+
+        this.form.valueChanges.subscribe(
+            () => {
+                this.{camelCase}.name = this.form.controls.name.value;
+            }
+        );
+    }
+
+    change() {
+        if (this.form.controls.name.errors && this.form.controls.name.errors.minlength) {
+            this.errorPattern = this.poI18nPipe.transform(
+                this.literals['minLength'], [this.validate.minLgth]
+            );
+        } else {
+            this.errorPattern = this.literals['emptyInput'];
+        }
+    }
+
+    private createFormControl() {
+        this.form = this.fb.group({
+            name: ['', Validators.compose([
+                Validators.required, Validators.minLength(this.validate.minLgth),
+                Validators.maxLength(this.validate.maxLgth), this.customIsEmpty
+            ])]
+        });
+    }
+
+    private customIsEmpty(control: AbstractControl): ValidationErrors {
+        if (control.value.trim().length === 0) {
+            return {isEmpty: true};
+        }
+        return null;
     }
 
     private checkInteractionOnForm(form: NgForm): void {
         if (form.dirty === true) {
             this.modalCancel.open();
         } else {
-            this.location.back();
+            this.closeModal();
+            this.router.navigate(['./{camelCase}']);
         }
     }
 
@@ -76,46 +119,39 @@ export class {pascalCase}EditComponent implements OnInit, OnDestroy {
         this.modalCancel.close();
     }
 
-    private isValid() {
-
-        // FIXME: Put validations here.
-        // TODO: Waiting for the TOTVS UX Team deliver the right way to present the error messages.
-
-        return true;
-    }
-
     private get() {
         const id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'), 10);
         if (id) {
             this.isPageEdit = true;
             this.service.getById(id).subscribe((item: I{pascalCase}) => {
                 this.{camelCase} = item;
+                this.form.setValue({
+                    name: item.name
+                });
             });
         }
     }
 
-    private create(item: I{pascalCase}) {
-        if (this.isValid()) {
-            this.service.create(item).subscribe(() => {
-                this.router.navigate(['/{camelCase}']);
-                this.thfNotification.success(this.literals['created{pascalCase}Message']);
-            });
-        }
+    private create() {
+        this.service.create(this.{camelCase}).subscribe(() => {
+            this.router.navigate(['/{camelCase}']);
+            this.poNotification.success(this.literals['createdMessage']);
+        });
     }
 
     private update() {
         this.service.update(this.{camelCase}).subscribe(() => {
             this.router.navigate(['/{camelCase}']);
-            this.thfNotification.success(this.literals['updatedMessage']);
+            this.poNotification.success(this.literals['updatedMessage']);
         });
     }
 
     private delete() {
         this.service.delete(this.{camelCase}.id).subscribe(data => {
             this.router.navigate(['/{camelCase}']);
-            this.thfNotification.success(
-                this.thfI18nPipe.transform(
-                    this.literals['excluded{pascalCase}Message'], [this.{camelCase}.name]
+            this.poNotification.success(
+                this.poI18nPipe.transform(
+                    this.literals['excludedMessage'], [this.{camelCase}.name]
                 )
             );
         });
@@ -128,42 +164,75 @@ export class {pascalCase}EditComponent implements OnInit, OnDestroy {
 
     private setupComponents() {
 
-        this.confirmDeleteAction = {
-            action: () => this.onConfirmDelete(), label: this.literals['remove']
+        this.confirmDeleteAction = { 
+            action: () => this.onConfirmDelete(), 
+            label: this.literals['yes'] 
         };
 
-        this.confirmReturnToListAction = {
-            label: this.literals['yes'], action: () => this.location.back()
+        this.cancelModalAction = { 
+            label: this.literals['no'], 
+            action: this.closeModal.bind(this)
+        };
+
+        this.backModalAction = { 
+            label: this.literals['yes'], 
+            action: () => this.router.navigate(['./{camelCase}']) 
         };
 
         this.editActions = [
-            { label: this.literals['save'], action: this.update.bind(this, this.{camelCase}) },
-            { label: this.literals['remove'], action: () => this.modalDelete.open() },
-            { label: this.literals['return'], action: this.checkInteractionOnForm.bind(this, this.form{pascalCase}) }
+            { 
+                label: this.literals['save'], 
+                action: this.update.bind(this, this.{camelCase}), 
+                disabled: () => this.form.invalid 
+            },
+            { 
+                label: this.literals['remove'], 
+                action: () => this.modalDelete.open() 
+            },
+            { 
+                label: this.literals['back'], 
+                action: this.checkInteractionOnForm.bind(this, this.form) 
+            }
         ];
 
         this.editBreadcrumb = {
             items: [
-                { label: this.literals['{camelCase}'], link: '/{camelCase}' },
-                { label: this.literals['edit{pascalCase}'], link: '/{camelCase}/edit' }
+                { 
+                    label: this.literals['{camelCase}'], l
+                    ink: '/{camelCase}' },
+                { 
+                    label: this.literals['edit'], 
+                    link: '/{camelCase}/edit' 
+                }
             ]
         };
 
         this.newActions = [
-            { label: this.literals['save'], action: this.create.bind(this, this.{camelCase}), icon: 'thf-icon-plus' },
-            { label: this.literals['return'], action: this.checkInteractionOnForm.bind(this, this.form{pascalCase}) }
+            { 
+                label: this.literals['save'], 
+                action: this.create.bind(this), 
+                icon: 'po-icon-plus', 
+                disabled: () => this.form.invalid 
+            },
+            { 
+                label: this.literals['back'], 
+                action: this.checkInteractionOnForm.bind(this, this.form) 
+            }
         ];
 
         this.newBreadcrumb = {
             items: [
-                { label: this.literals['{camelCase}'], link: '/{camelCase}' },
-                { label: this.literals['addNew{pascalCase}'], link: '/{camelCase}/new' }
+                { 
+                    label: this.literals['{camelCase}'], 
+                    link: '/{camelCase}' 
+                },
+                { 
+                    label: this.literals['new'], 
+                    link: '/{camelCase}/new' 
+                }
             ]
         };
 
-        this.returnAction = {
-            action: this.closeModal.bind(this), label: this.literals['return']
-        };
     }
 
     ngOnDestroy(): void {}

@@ -16,6 +16,15 @@ export class CRUDSimple {
 
         return Observable.forkJoin(
             
+            // Loading Interceptor
+            FileHelper.createComponentFile(
+                `../${componentDirectory}/${componentName}.loading-interceptor.module.ts`, 
+                TemplateHelper.getTemplate('simple/loading-interceptor.module.tpl')
+            ),
+            FileHelper.createComponentFile(
+                `../${componentDirectory}/${componentName}.loading-interceptor.service.ts`, 
+                TemplateHelper.getTemplate('simple/loading-interceptor.service.tpl')
+            ),
             // List Component
             FileHelper.createComponentFile(
                 `${componentDirectory}/${componentName}.list.component.css`, 

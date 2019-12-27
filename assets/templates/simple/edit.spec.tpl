@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { {pascalCase}EditComponent } from './{paramCase}.edit.component';
 
 describe('{pascalCase}EditComponent', () => {
-    
+
     let component: {pascalCase}EditComponent;
     let fixture: ComponentFixture<{pascalCase}EditComponent>;
 

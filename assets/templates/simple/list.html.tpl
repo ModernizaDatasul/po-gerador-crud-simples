@@ -1,32 +1,31 @@
-<thf-page-list
-    [t-title]="literals?.{camelCase}"
-    [t-actions]="pageActions"
-    [t-breadcrumb]="breadcrumb"
-    [t-disclaimer-group]="disclaimerGroup"
-    [t-filter]="filterSettings"
->
-    <thf-table
-        t-checkbox="true"
-        t-hide-select-all="false"
-        [t-loading]="isLoading"
-        [t-actions]="tableActions"
-        [t-columns]="columns"
-        [t-items]="items"
-        [t-show-more-disabled]="!hasNext"
-        (t-show-more)="search(true)"
-    >
-    </thf-table>
-</thf-page-list>
+<po-page-list
+    [p-title]="literals?.{camelCase}"
+    [p-actions]="pageActions"
+    [p-breadcrumb]="breadcrumb"
+    [p-disclaimer-group]="disclaimerGroup"
+    [p-filter]="filterSettings">
 
-<thf-modal
+    <po-table
+        p-checkbox="true"
+        p-hide-select-all="true"
+        [p-columns]="columns"
+        [p-items]="items"
+        [p-show-more-disabled]="!hasNext"
+        (p-show-more)="search(true)">        
+    </po-table>
+    
+</po-page-list>
+
+<po-modal
     #modalDelete
-    t-close
-    t-size="sm"
-    [t-title]="literals?.modalDeleteTitle"
-    [t-primary-action]="confirmDeleteAction"
-    [t-secondary-action]="cancelDeleteAction"
->
-    <div class="thf-font-text-large thf-text-left">
-        {{ literals?.modalDeleteMessage }}
+    p-close
+    p-size="auto"
+    [p-title]="literals?.excludeTitle"
+    [p-primary-action]="confirmDeleteAction"
+    [p-secondary-action]="cancelDeleteAction">
+
+    <div class="po-font-text-large po-text-left">
+        {{ !moreSelected? literals?.excludeOne:literals?.excludeMore | poI18n:[selectedLength] }}
     </div>
-</thf-modal>
+
+</po-modal>
