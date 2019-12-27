@@ -9,12 +9,12 @@ import { CRUDSimple } from './model/CRUDSimple';
 export function activate(context: vscode.ExtensionContext) {
 
     let componentNameInput: vscode.InputBoxOptions = {
-        prompt: 'Please enter \'component\' name in camelCase',
+        prompt: 'Inform o nome do componente utilizando cameCaso, exemplo: ticketStatus',
         placeHolder: 'componentName',
         validateInput: validateInputValue
     };
-
-    let thfCRUDSimple = vscode.commands.registerCommand('extension.thfCRUDSimple', () => {
+    
+    let poCRUDSimple = vscode.commands.registerCommand('extension.poCRUDSimple', () => {
         showInput(componentNameInput).concatMap(value => {
             if (!value) return Observable.empty();
             return CRUDSimple.createComponent(value);
@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     function validateInputValue(value: string): string {
-        if (!value || value.length === 0) return 'Name can not be empty!';
+        if (!value || value.length === 0) return 'O nome não pode ser vazio!';
         else return undefined;
     };
 
@@ -31,14 +31,14 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     function showCompletedMessage(): void {
-        vscode.window.setStatusBarMessage('CRUD component successfuly created!', 5000);
+        vscode.window.setStatusBarMessage('Componente criado com sucesso!', 5000);
     };
 
     function showErrorMessage(err: Error): void {
         if (err.message) vscode.window.showErrorMessage(err.message);
     };
 
-    context.subscriptions.push(thfCRUDSimple);
+    context.subscriptions.push(poCRUDSimple);
 }
 
 export function deactivate() { }
