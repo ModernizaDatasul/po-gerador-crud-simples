@@ -76,15 +76,15 @@ export class CRUDSimple {
             ),
             FileHelper.createComponentFile(
                 `${sharedDirectory}/literals/i18n/${componentName}-pt.ts`, 
-                TemplateHelper.getParsedTemplate(componentName, 'simple/i18n.tpl', { language: 'Pt' })
+                TemplateHelper.getParsedTemplate(componentName, 'simple/i18n-pt.tpl', { language: 'Pt' })
             ),
             FileHelper.createComponentFile(
                 `${sharedDirectory}/literals/i18n/${componentName}-en.ts`, 
-                TemplateHelper.getParsedTemplate(componentName, 'simple/i18n.tpl', { language: 'En' })
+                TemplateHelper.getParsedTemplate(componentName, 'simple/i18n-en.tpl', { language: 'En' })
             ),
             FileHelper.createComponentFile(
                 `${sharedDirectory}/literals/i18n/${componentName}-es.ts`, 
-                TemplateHelper.getParsedTemplate(componentName, 'simple/i18n.tpl', { language: 'Es' })
+                TemplateHelper.getParsedTemplate(componentName, 'simple/i18n-es.tpl', { language: 'Es' })
             ),
 
             // MODULE

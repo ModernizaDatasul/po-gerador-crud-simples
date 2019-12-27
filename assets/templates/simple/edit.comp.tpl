@@ -197,10 +197,10 @@ export class {pascalCase}EditComponent implements OnInit, OnDestroy {
 
         this.editBreadcrumb = {
             items: [
-                { 
-                    label: this.literals['{camelCase}'], l
-                    ink: '/{camelCase}' },
-                { 
+                {
+                    label: this.literals['{camelCase}'], 
+                    link: '/{camelCase}' },
+                {
                     label: this.literals['edit'], 
                     link: '/{camelCase}/edit' 
                 }

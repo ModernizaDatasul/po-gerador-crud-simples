@@ -15,16 +15,15 @@ export class {pascalCase}Service {
     // FIXME: Ajuste o módulo
 	private apiUrl = '/dts/datasul-rest/resources/prg/modulo/v1/{camelCase}';
 
-
     constructor(private http: HttpClient) { }
 
     query(filters: PoDisclaimer[], page = 1, pageSize = 20): Observable<TotvsResponse<I{pascalCase}>> {
 
-        let url: string = `${this.apiUrl}?pageSize=${pageSize}&page=${page}`;
+        let url = `${this.apiUrl}?pageSize=${pageSize}&page=${page}`;
 
         if (filters && filters.length > 0) {
 
-            const urlParams = new Array<String>();
+            const urlParams = new Array<string>();
 
             filters.map(filter => {
                 urlParams.push(`${filter.property}=${filter.value}`);
@@ -48,7 +47,7 @@ export class {pascalCase}Service {
         return this.http.put<I{pascalCase}>(`${this.apiUrl}/${model.id}`, model);
     }
 
-    delete(id: number): Observable<Object> {
+    delete(id: number): Observable<object> {
         return this.http.delete(`${this.apiUrl}/${id}`);
     }
 
