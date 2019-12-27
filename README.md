@@ -1,4 +1,4 @@
-# [Portinaru](https://portinari.io/) Gerador de CRUD Simples Portinari
+# [Portinari](https://portinari.io/) Gerador de CRUD Simples Portinari
 
 Esse extensão cria um CRUD básico com toda a estrutura necessário utilizando o Portinari
 
