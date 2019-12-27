@@ -17,7 +17,7 @@
         "Portinari",
         "CRUD"
     ],
-    "version": "1.0.1",
+    "version": "1.0.2",
     "activationEvents": [
         "onCommand:extension.poCRUDSimple"
     ],
