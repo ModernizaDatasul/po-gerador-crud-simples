@@ -9,7 +9,7 @@ import { CRUDSimple } from './model/CRUDSimple';
 export function activate(context: vscode.ExtensionContext) {
 
     let componentNameInput: vscode.InputBoxOptions = {
-        prompt: 'Inform o nome do componente utilizando cameCaso, exemplo: ticketStatus',
+        prompt: 'Informe o nome do componente utilizando camelCase, exemplo: ticketStatus',
         placeHolder: 'componentName',
         validateInput: validateInputValue
     };
