@@ -1,9 +1,12 @@
 {
     "name": "po-gerador-crud-simples",
-    "publisher": "alexandre.dalabona",
-    "displayName": "PO Gerardor de CRUD Simples",
+    "publisher": "PoGeradorCRUDSimples",
+    "displayName": "PO Gerador de CRUD Simples",
     "description": "Gerador de CRUD Simples utilizando Angular + Portinari",
     "icon": "assets/images/po-icon.png",
+    "engines": {
+        "vscode": "^1.41.0"
+    },
     "homepage": "https://github.com/AlexandreWeber/po-gerador-crud-simples",
     "repository": {
         "type": "git",
@@ -43,7 +46,7 @@
     "devDependencies": {
         "@types/node": "^10.5.2",
         "typescript": "^2.0.3",
-        "vscode": "^1.0.0"
+        "vscode": "^1.1.36"
     },
     "dependencies": {
         "change-case": "^3.0.0",
