@@ -190,7 +190,7 @@ export class {pascalCase}EditComponent implements OnInit, OnDestroy {
                 action: () => this.modalDelete.open() 
             },
             { 
-                label: this.literals['back'], 
+                label: this.literals['return'], 
                 action: this.checkInteractionOnForm.bind(this, this.form) 
             }
         ];
@@ -215,7 +215,7 @@ export class {pascalCase}EditComponent implements OnInit, OnDestroy {
                 disabled: () => this.form.invalid 
             },
             { 
-                label: this.literals['back'], 
+                label: this.literals['return'], 
                 action: this.checkInteractionOnForm.bind(this, this.form) 
             }
         ];

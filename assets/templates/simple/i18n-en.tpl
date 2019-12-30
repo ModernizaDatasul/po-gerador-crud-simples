@@ -14,5 +14,5 @@ export const {camelCase}En = {
 
     createdMessage: 'Record successfully saved.',
     excludedMessage: 'Record {0} successfully removed.',
-    updatedMessage: 'Record successfully updated.'
+    updatedMessage: 'Record successfully updated.',
 };
