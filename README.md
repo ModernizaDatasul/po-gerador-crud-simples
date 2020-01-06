@@ -2,7 +2,29 @@
 
 Esse extensão cria um CRUD básico com toda a estrutura necessário utilizando o Portinari
 
-Estrutura das pastas:
+## Instalação
+Para instalar o Gerador de CRUD:
+- Acesse a opção Extensions (Ctrl + Shift + X) no Visual Studio Code
+- Pesquise Por Po CRUD
+- Instale a extensão
+
+![Instalação](assets/images/instalacao.gif)
+
+## Utilização
+Para utilizar a extensão basta:
+
+**Opção 1:** Clicar com o botão direito sobre a pasta `src` e selecionar a opção `PO: CRUD Simple`.
+
+![Utilização1](assets/images/utilizacao_1.gif)
+
+
+**Opção 2:**
+Abrir o painel de comandos (CTRL + SHIT + P) e digitar PO: CRUD Simple.
+
+![Utilização2](assets/images/utilizacao_2.gif)
+
+
+## Estrutura das pastas:
 
 ```html
 - shared
