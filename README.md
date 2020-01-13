@@ -1,6 +1,6 @@
 # [Portinari](https://portinari.io/) Gerador de CRUD Simples
 
-Esse extensão cria um CRUD básico com toda a estrutura necessário utilizando o Portinari
+Esse extensão cria um CRUD básico com toda a estrutura necessária utilizando o Portinari
 
 ## Instalação
 Para instalar o Gerador de CRUD:
