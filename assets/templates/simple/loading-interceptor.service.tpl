@@ -6,11 +6,17 @@ import { HttpRequest, HttpHandler, HttpInterceptor, HttpEvent, HttpHeaders } fro
 export class LoadingInterceptorService implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+        let req: HttpRequest<any>;
+
         const headers = new HttpHeaders({
             'X-Portinari-Screen-Lock': 'true'
         });
 
-        const req = request.clone({headers});
+        if (!request.headers.get('X-Portinari-Screen-Lock')) {
+            req = request.clone({headers});
+        } else {
+            req = request.clone();
+        }
 
         return next.handle(req);
     }
