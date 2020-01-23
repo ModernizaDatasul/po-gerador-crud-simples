@@ -14,7 +14,6 @@ export class FileHelper {
         fse.mkdirsSync(sharedDirectory);
         fse.mkdirsSync(`${sharedDirectory}/model`);
         fse.mkdirsSync(`${sharedDirectory}/services`);
-        fse.mkdirsSync(`${sharedDirectory}/interfaces`);
 
         return sharedDirectory;
     };

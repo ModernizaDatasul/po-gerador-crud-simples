@@ -63,10 +63,6 @@ export class CRUDSimple {
 
             // SHARED
             FileHelper.createComponentFile(
-                `${sharedDirectory}/interfaces/totvs-response.interface.ts`, 
-                TemplateHelper.getTemplate('simple/response.model.tpl')
-            ),
-            FileHelper.createComponentFile(
                 `${sharedDirectory}/model/${componentName}.model.ts`, 
                 TemplateHelper.getParsedTemplate(componentName, 'simple/model.tpl')
             ),

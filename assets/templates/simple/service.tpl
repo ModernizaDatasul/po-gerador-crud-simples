@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { PoDisclaimer } from '@portinari/portinari-ui';
 
-import { TotvsResponse } from '../interfaces/totvs-response.interface';
+import { TotvsResponse } from 'dts-backoffice-util';
 
 import { I{pascalCase} } from '../model/{paramCase}.model';
 

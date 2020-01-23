@@ -9,7 +9,7 @@ import {
 
 import { forkJoin, Subscription } from 'rxjs';
 
-import { TotvsResponse } from '../shared/interfaces/totvs-response.interface';
+import { TotvsResponse } from 'dts-backoffice-util';
 
 import { I{pascalCase} } from '../shared/model/{paramCase}.model';
 import { {pascalCase}Service } from '../shared/services/{paramCase}.service';

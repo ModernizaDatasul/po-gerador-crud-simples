@@ -28,8 +28,6 @@ Abrir o painel de comandos (CTRL + SHIT + P) e digitar PO: CRUD Simple.
 
 ```html
 - shared
-    - interfaces
-        > totvs-response.interface.ts
     - literals
         - i18n
             > component-name-pt.ts
