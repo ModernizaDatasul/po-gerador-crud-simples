@@ -9,10 +9,10 @@ export class LoadingInterceptorService implements HttpInterceptor {
         let req: HttpRequest<any>;
 
         const headers = new HttpHeaders({
-            'X-Portinari-Screen-Lock': 'true'
+            'X-Po-Screen-Lock': 'true'
         });
 
-        if (!request.headers.get('X-Portinari-Screen-Lock')) {
+        if (!request.headers.get('X-Po-Screen-Lock')) {
             req = request.clone({headers});
         } else {
             req = request.clone();

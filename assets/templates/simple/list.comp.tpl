@@ -5,7 +5,7 @@ import {
     PoBreadcrumb, PoDisclaimerGroup, PoDisclaimer, PoModalAction,
     PoModalComponent, PoPageAction, PoPageFilter, PoTableColumn,
     PoI18nService, PoI18nPipe, PoNotificationService
-} from '@portinari/portinari-ui';
+} from '@po-ui/ng-components';
 
 import { forkJoin, Subscription } from 'rxjs';
 

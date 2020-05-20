@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { PoDisclaimer } from '@portinari/portinari-ui';
+import { PoDisclaimer } from '@po-ui/ng-components';
 
 import { TotvsResponse } from 'dts-backoffice-util';
 

@@ -2,7 +2,7 @@
     "name": "po-gerador-crud-simples",
     "publisher": "PoGeradorCRUDSimples",
     "displayName": "PO Gerador de CRUD Simples",
-    "description": "Gerador de CRUD Simples utilizando Angular + Portinari",
+    "description": "Gerador de CRUD Simples utilizando Angular + PO UI",
     "icon": "assets/images/po-icon.png",
     "engines": {
         "vscode": "^1.41.0"
@@ -14,10 +14,10 @@
     },
     "keywords": [
         "ANGULAR",
-        "Portinari",
+        "PO UI",
         "CRUD"
     ],
-    "version": "1.0.5",
+    "version": "1.0.6",
     "activationEvents": [
         "onCommand:extension.poCRUDSimple"
     ],
