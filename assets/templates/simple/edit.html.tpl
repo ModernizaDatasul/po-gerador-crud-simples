@@ -12,7 +12,7 @@
                         [p-error-pattern]="errorPattern"
                         p-required="true"
                         [p-placeholder]="literals?.name"
-                        p-focus="true"
+                        p-auto-focus="true"
                         [p-label]="literals?.name"
                         p-maxlength="50"
                         (p-change-model)="change()"

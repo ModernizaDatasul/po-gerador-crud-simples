@@ -1,6 +1,6 @@
-# [Portinari](https://portinari.io/) Gerador de CRUD Simples
+# [PO UI](https://po-ui.io/) Gerador de CRUD Simples
 
-Esse extensão cria um CRUD básico com toda a estrutura necessária utilizando o Portinari
+Esse extensão cria um CRUD básico com toda a estrutura necessária utilizando o PO UI.
 
 ## Instalação
 Para instalar o Gerador de CRUD:
@@ -13,7 +13,7 @@ Para instalar o Gerador de CRUD:
 ## Utilização
 Para utilizar a extensão basta:
 
-**Opção 1:** Clicar com o botão direito sobre a pasta `src` e selecionar a opção `PO: CRUD Simple`.
+**Opção 1:** Clicar com o botão direito sobre a pasta `src` e selecionar a opção `PO: CRUD Simples`.
 
 ![Utilização1](assets/images/utilizacao_1.gif)
 

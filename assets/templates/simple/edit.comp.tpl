@@ -17,7 +17,7 @@ import {
     PoI18nService, 
     PoI18nPipe, 
     PoNotificationService
-} from '@portinari/portinari-ui';
+} from '@po-ui/ng-components';
 
 import { I{pascalCase}, {pascalCase} } from '../../shared/model/{paramCase}.model';
 import { {pascalCase}Service } from '../../shared/services/{paramCase}.service';

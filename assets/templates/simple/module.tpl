@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { PoModule, PoI18nPipe } from '@portinari/portinari-ui';
+import { PoModule, PoI18nPipe } from '@po-ui/ng-components';
 
 import { {pascalCase}Service } from '../shared/services/{paramCase}.service';
 import { {pascalCase}EditComponent } from './edit/{paramCase}.edit.component';
